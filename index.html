@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>YouTubeVideoThumbnails</title>
+    <style>
+      body {
+        background-color: #FFFFFF;
+      }
+      a {
+        color: blue;
+        vertical-align: bottom;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      a:visited {
+        color: blue;
+      }
+      img {
+        margin-top: 5px;
+        display: block;
+      }
+      #titleBanner {
+        margin: 10px;
+        padding: 10px;
+        background-color: olive; /*#D22B2B;*/
+        color: #FFFFFF;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20pt;
+        font-weight: bold;
+      }
+      #queryBox {
+        margin: 10px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 18pt;
+        text-align: center;
+      }
+      #videoURLTxt {
+        line-height: 1.3;
+        font-size: 18pt;
+        font-weight: bold;
+        color: purple; /*#D22B2B;*/
+      }
+      #fetchBtn {
+        vertical-align: bottom;
+        display: inline-block;
+        height:35px;
+      }
+      .videoTitle {
+        color: darkblue;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12pt;
+        font-weight: bold;
+        padding-top: 5px;
+      }
+      .videoInfo {
+        /*background-color: #D8D8D8;*/
+      }
+      .thumbnailLinkAndImage {
+        background-color: #D8D8D8;
+        padding: 10px;
+        text-align: center;
+      }
+      .videoThumbnails {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+      #thumbnailsList {
+        margin: 10px;
+        border: 1px solid black;
+        overflow-x: scroll;
+        white-space: nowrap;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+      function fetchVideoTitle(videoID) {
+        var url = "https://www.youtube.com/watch?v=" + videoID;
+        url = encodeURIComponent(url);
+        var videoTitle = "";
+        
+        $.ajax({
+          url: 'https://youtube.com/oembed?url=' + url + '&format=json',
+          async: false,
+          dataType: 'json',
+          success: function(result) {
+            videoTitle = result.title;
+          }
+        });
+        return videoTitle;
+      }
+
+      function fetchThumbnails() {
+        var videoID = document.getElementById("videoURLTxt").value;
+        var thumbnailTypes = ["default", "mqdefault", "sddefault", "hqdefault", "hq720", "hq720_1", "hq720_2", "hq720_3", "maxresdefault", "maxres1", "maxres2", "maxres3", "oardefault", "oar1", "oar2", "oar3", "0", "1", "2", "3"];
+
+        var videoThumbnails = document.createElement("div");
+        videoThumbnails.className = "videoThumbnails";
+
+        for (var i = 0; i < thumbnailTypes.length; i++) {
+          var thumbnailImageUrl = "https://i.ytimg.com/vi/" + videoID + "/" + thumbnailTypes[i] + ".jpg";
+
+          var thumbnailLink = document.createElement("a");
+          thumbnailLink.href = thumbnailImageUrl;
+          thumbnailLink.innerHTML = thumbnailTypes[i];
+          thumbnailLink.target="_blank";
+
+          var thumbnailPreview = document.createElement("img");
+          thumbnailPreview.src = thumbnailImageUrl;
+          thumbnailPreview.width = 100;
+
+          var thumbnailLinkAndImage = document.createElement("div");
+          thumbnailLinkAndImage.className = "thumbnailLinkAndImage";
+          thumbnailLink.appendChild(thumbnailPreview);
+          thumbnailLinkAndImage.appendChild(thumbnailLink);
+          videoThumbnails.appendChild(thumbnailLinkAndImage);
+        }
+
+        var videoTitle = document.createElement("p");
+        videoTitle.className = "videoTitle";
+        videoTitle.innerHTML = fetchVideoTitle(videoID);
+
+        var videoInfo = document.createElement("div");
+        videoInfo.className = "videoInfo";
+        videoInfo.appendChild(videoTitle);
+        videoInfo.appendChild(videoThumbnails);
+
+        document.getElementById("thumbnailsList").prepend(videoInfo);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="titleBanner">YouTubeVideoThumbnails</div>
+    <div id="queryBox">
+      <span>youtube.com/watch?v=</span>
+      <input id="videoURLTxt" type="text" value="tLHtbtbYS3M">
+      <button id="fetchBtn" onclick="fetchThumbnails();">Fetch Thumbnails</button>
+    </div>
+    <div id="thumbnailsList"></div>
+  </body>
+</html>
