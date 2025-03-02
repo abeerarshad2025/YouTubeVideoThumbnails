@@ -1,0 +1,85 @@
+body {
+  background-color: #FFFFFF;
+}
+
+a {
+  color: blue;
+  vertical-align: bottom;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:visited {
+  color: blue;
+}
+
+img {
+  margin-top: 5px;
+  display: block;
+}
+
+#titleBanner {
+  margin: 10px;
+  padding: 10px;
+  background-color: olive; /*#D22B2B;*/
+  color: #FFFFFF;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+#queryBox {
+  margin: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18pt;
+  text-align: center;
+}
+
+#videoURLTxt {
+  line-height: 1.3;
+  font-size: 18pt;
+  font-weight: bold;
+  color: purple; /*#D22B2B;*/
+}
+
+#fetchBtn {
+  vertical-align: bottom;
+  display: inline-block;
+  height:35px;
+}
+
+.videoTitle {
+  color: darkblue;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12pt;
+  font-weight: bold;
+  padding-top: 5px;
+}
+
+.videoInfo {
+  /*background-color: #D8D8D8;*/
+}
+
+.thumbnailLinkAndImage {
+  background-color: #D8D8D8;
+  padding: 10px;
+  text-align: center;
+}
+
+.videoThumbnails {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#thumbnailsList {
+  margin: 10px;
+  border: 1px solid black;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
